@@ -5,7 +5,6 @@ class Api::BlogsController < ApplicationController
 
       def create
         @blog = Blog.new(blog_params)
-        binding.pry
         if @blog.save
           render json: @blog
         else
@@ -23,7 +22,7 @@ class Api::BlogsController < ApplicationController
         Blog.find(params[:id]).destroy
         render json: { message: 'Blog deleted'}
       end
-      
+
       private
         def blog_params
           params.require(:blog).permit(:title, :subtitle, :body, :image, :date)

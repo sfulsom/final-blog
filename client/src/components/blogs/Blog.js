@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BlogsForm from './BlogsForm';
-import { Container } from 'semantic-ui-react'
+import {Card, Image} from 'semantic-ui-react'
 
 class Blog extends Component {
 
@@ -10,22 +10,29 @@ class Blog extends Component {
 
     render() {
         // const { blog, deleteBlog, updateBlog } = this.props;
-        const {  id, deleteBlog, updateBlogs, ...rest } = this.props;
+        const {  id, deleteBlogs, updateBlogs, ...rest } = this.props;
         return (
-            <Container>
-                <>
-                    <h3>{rest.title}</h3>
-                    <h5>{rest.subtitle}</h5>
-                    <button onClick={() => deleteBlog(id)}>Delete</button>
+            <Card>
+                <Image src={rest.image} wrapped ui={false} />
+                <Card.Content>
+                <Card.Header>{rest.title}</Card.Header>
+                <Card.Meta>
+                    <span className='date'>{rest.date}</span>
+                </Card.Meta>
+                <Card.Description>
+                {rest.subtitle}
+                </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <button onClick={() => deleteBlogs(id)}>Delete</button>
                     <button onClick={() => this.toggleEdit()}>Edit</button>
-                </>
-                {!this.state.editing ?
-                    <div></div>
-                    :
-                    <BlogsForm id={id}{...rest} update={updateBlogs} toggleEdit={this.toggleEdit} />
-                }
-
-            </Container>
+                    {!this.state.editing ?
+                        <div></div>
+                        :
+                        <BlogsForm id={id}{...rest} update={updateBlogs} toggleEdit={this.toggleEdit} />
+                    }
+                </Card.Content>
+            </Card>
         )
     }
 

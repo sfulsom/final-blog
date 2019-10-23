@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Segment, Button, Icon } from 'semantic-ui-react';
+import { Header, Grid, Button, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import BlogsForm from './BlogsForm'
 import Blog from "./Blog"
@@ -19,10 +19,12 @@ class Blogs extends Component {
   addBlog = (blogs) => {
     axios.post(`/api/blogs/`, blogs)
       .then( res => {
+        console.log(res)
         const { blogs } = this.state;
         this.setState({ blogs: [...blogs, res.data]})
-      })
-      .catch( res => {
+    })
+    .catch( res => {
+        console.log(res)
         debugger
       })
   }
@@ -30,10 +32,10 @@ class Blogs extends Component {
   updateBlogs = (id, blog) => {
     axios.put(`/api/blogs/${id}/`, {blog})
       .then( res => {
-        const blogs = this.state.blogs.map( p => {
-          if( blog.id === id)
+        const blogs = this.state.blogs.map( b => {
+          if( b.id === id)
             return res.data
-          return blog
+          return b
         })
         this.setState({ blogs, })
       })
@@ -51,14 +53,18 @@ class Blogs extends Component {
     const {blogs} =this.state;
     return (
         <div>
-            {blogs.map(b => {
-                return(
-                    <Blog key={b.id} 
-                    {...b} 
-                    deleteBlogs={this.deleteBlogs} 
-                    updateBlogs={this.updateBlogs} /> 
-                )
-            })}
+            <Grid columns='three' divided>
+                    {blogs.map(b => {
+                        return(
+                            <Grid.Column>
+                                <Blog key={b.id} 
+                                {...b} 
+                                deleteBlogs={this.deleteBlogs} 
+                                updateBlogs={this.updateBlogs} /> 
+                            </Grid.Column>
+                        )
+                    })}
+            </Grid>
         </div>
     )
 
