@@ -74,8 +74,8 @@ class Blogs extends Component {
     
     return (
       <>
-        <h2>Add blogs</h2>
-        <Button onClick={this.toggleEdit}>add blog</Button>
+        <h1 class="h2">Add blogs</h1>
+        <Button className="ButtonSpace" onClick={this.toggleEdit}>Add Blog</Button>
         { this.state.editing ? <BlogsForm add={this.addBlog}/>: <div></div> 
 }
 {this.renderBlogs()}

@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.home {
+  background-color: #1c1c1c;
+}
+
+.h2 {
+  color: white;
+}
+
+.ui.ButtonSpace {
+  margin-bottom: 25px !important;
+}
+
+.ui.BottonView {
+  margin-bottom: 5px !important;
+}
+
+.ui.Header {
+  color: white !important;
+}

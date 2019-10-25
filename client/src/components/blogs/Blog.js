@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import BlogsForm from './BlogsForm';
-import {Card, Image} from 'semantic-ui-react'
+import {Card, Image, Modal, Button, Header, Icon, } from 'semantic-ui-react'
 
 class Blog extends Component {
+
+    state = { open: false }
+
+    closeConfigShow = (closeOnEscape, closeOnDimmerClick) => () => {
+      this.setState({ closeOnEscape, closeOnDimmerClick, open: true })
+    }
+  
+    close = () => this.setState({ open: false })
 
     state = { editing: false }
 
@@ -10,8 +18,10 @@ class Blog extends Component {
 
     render() {
         // const { blog, deleteBlog, updateBlog } = this.props;
+        const { open, closeOnEscape, closeOnDimmerClick } = this.state
         const {  id, deleteBlogs, updateBlogs, ...rest } = this.props;
         return (
+            <>
             <Card>
                 <Image src={rest.image} wrapped ui={false} />
                 <Card.Content>
@@ -24,8 +34,23 @@ class Blog extends Component {
                 </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <button onClick={() => deleteBlogs(id)}>Delete</button>
-                    <button onClick={() => this.toggleEdit()}>Edit</button>
+
+                <Modal trigger={<Button className="BottonView" color='blue'>View Blog</Button>} closeIcon>
+    <Modal.Header>{rest.title}</Modal.Header>
+    <Modal.Content image scrolling>
+      <Image size='huge' src={rest.image} wrapped />
+
+      <Modal.Description>
+        <Header>{rest.subtitle}</Header>
+        <p>
+        {rest.body}
+        </p>
+      </Modal.Description>
+    </Modal.Content>
+  </Modal>
+
+                    <Button color='red' onClick={() => deleteBlogs(id)}>Delete</Button>
+                    <Button color='darkgray' onClick={() => this.toggleEdit()}>Edit</Button>
                     {!this.state.editing ?
                         <div></div>
                         :
@@ -33,6 +58,8 @@ class Blog extends Component {
                     }
                 </Card.Content>
             </Card>
+            
+            </>
         )
     }
 
